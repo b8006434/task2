@@ -7,9 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TollSystemWinForms.Data;
-using TollSystemWinForms.Services;
 using TollSystemWinForms.UI;
+using TollSystemTollOperator.UI;
+using TollSystemDriver.UI;
+using TollSystemServices.Enums;
+using TollSystemServices;
 
 namespace TollSystemWinForms
 {
@@ -147,10 +149,21 @@ namespace TollSystemWinForms
             this.Hide();
             DialogResult mainMenuSuccess;
 
-            //using (Mainfrm mainMenu = new Mainfrm(currentUser))
-            //{
-             //   mainMenuSuccess = mainMenu.ShowDialog();
-           // }
+            if(currentUser.UserType == UserType.Driver)
+            {
+                using(DriverDashboard driverDashboard = new DriverDashboard(currentUser))
+                {
+                    driverDashboard.ShowDialog();
+                }
+            }
+
+            else if(currentUser.UserType == UserType.TollOperator)
+            {
+                using(TollOperatorDashboard tollOperatorDashboard = new TollOperatorDashboard())
+                {
+                    tollOperatorDashboard.ShowDialog();
+                }
+            }
 
             if (!this.loginBttn.IsDisposed)
             {

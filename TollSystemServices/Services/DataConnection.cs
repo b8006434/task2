@@ -7,11 +7,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TollSystemWinForms.Data;
-using TollSystemWinForms.Enums;
-using TollSystemWinForms.Services;
+using TollSystemServices.Enums;
 
-namespace TollSystemWinForms.Database
+namespace TollSystemServices
 {
     public static class DataConnection
     {

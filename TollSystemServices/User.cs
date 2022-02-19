@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TollSystemWinForms.Enums;
+using TollSystemServices.Enums;
 
-namespace TollSystemWinForms.Data
+namespace TollSystemServices
 {
     public class User
     {

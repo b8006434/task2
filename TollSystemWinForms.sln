@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TollSystemWinForms", "TollSystemWinForms\TollSystemWinForms.csproj", "{896B5AC3-86A8-4973-836A-F8DE284357FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TollSystemTollOperator", "TollSystemTollOperator\TollSystemTollOperator.csproj", "{E4319467-DECE-4B07-A0A2-C45D4BDD6145}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TollSystemDriver", "TollSystemDriver\TollSystemDriver.csproj", "{1C3917AC-F4D2-4D3C-94F4-24436DB26E95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TollSystemServices", "TollSystemServices\TollSystemServices.csproj", "{189BA884-47DA-47F5-A0F1-BBBF1D66F0DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{896B5AC3-86A8-4973-836A-F8DE284357FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{896B5AC3-86A8-4973-836A-F8DE284357FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{896B5AC3-86A8-4973-836A-F8DE284357FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4319467-DECE-4B07-A0A2-C45D4BDD6145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4319467-DECE-4B07-A0A2-C45D4BDD6145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4319467-DECE-4B07-A0A2-C45D4BDD6145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4319467-DECE-4B07-A0A2-C45D4BDD6145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C3917AC-F4D2-4D3C-94F4-24436DB26E95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C3917AC-F4D2-4D3C-94F4-24436DB26E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C3917AC-F4D2-4D3C-94F4-24436DB26E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C3917AC-F4D2-4D3C-94F4-24436DB26E95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{189BA884-47DA-47F5-A0F1-BBBF1D66F0DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{189BA884-47DA-47F5-A0F1-BBBF1D66F0DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{189BA884-47DA-47F5-A0F1-BBBF1D66F0DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{189BA884-47DA-47F5-A0F1-BBBF1D66F0DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

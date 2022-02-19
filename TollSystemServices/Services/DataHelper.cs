@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TollSystemWinForms.Data;
-using TollSystemWinForms.Database;
 
-namespace TollSystemWinForms.Services
+namespace TollSystemServices
 {
     public static class DataHelper
     {

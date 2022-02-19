@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using TollSystemWinForms.Database;
-using TollSystemWinForms.Enums;
+using TollSystemServices.Enums;
 
-namespace TollSystemWinForms.Services
+namespace TollSystemServices
 {
     /// <summary>
     /// Helper class for validation of data

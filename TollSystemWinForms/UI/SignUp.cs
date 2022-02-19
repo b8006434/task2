@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TollSystemWinForms.Database;
-using TollSystemWinForms.Services;
+using TollSystemServices.Enums;
+using TollSystemServices;
 
 namespace TollSystemWinForms.UI
 {
@@ -137,7 +137,7 @@ namespace TollSystemWinForms.UI
 
             List<string> userDetails = new List<string> { email, hashedPassword, name, streetName, city, postCode, country };
 
-            DataConnection.InsertIntoUsersTable(userDetails,Enums.UserType.Driver);
+            DataConnection.InsertIntoUsersTable(userDetails,UserType.Driver);
         }
 
         /// <summary>

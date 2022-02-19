@@ -62,12 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\DataConnection.cs" />
-    <Compile Include="Data\User.cs" />
-    <Compile Include="Enums\PasswordScore.cs" />
-    <Compile Include="Enums\UserType.cs" />
-    <Compile Include="Services\DataHelper.cs" />
-    <Compile Include="Services\Validation.cs" />
     <Compile Include="TollSystemDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -227,6 +221,20 @@
     <None Include="Resources\coronavirus.png" />
     <None Include="Resources\condo.png" />
     <None Include="Resources\bill.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TollSystemDriver\TollSystemDriver.csproj">
+      <Project>{1c3917ac-f4d2-4d3c-94f4-24436db26e95}</Project>
+      <Name>TollSystemDriver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TollSystemServices\TollSystemServices.csproj">
+      <Project>{189ba884-47da-47f5-a0f1-bbbf1d66f0df}</Project>
+      <Name>TollSystemServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TollSystemTollOperator\TollSystemTollOperator.csproj">
+      <Project>{e4319467-dece-4b07-a0a2-c45d4bdd6145}</Project>
+      <Name>TollSystemTollOperator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

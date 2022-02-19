@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TollSystemWinForms.Enums
+namespace TollSystemServices.Enums
 {
     /// <summary>
     /// Password score used when signing up to make sure strong passwords are enforced
