@@ -9,9 +9,9 @@ namespace TollSystemServices.Enums
     /// <summary>
     /// The type of user currently logged in for correct dashboard Identification
     /// </summary>
-    public enum UserType
+    public enum DriverType
     {
-        TollOperator = 0,
-        Driver = 1
+        Personal = 0,
+        Business = 1
     }
 }

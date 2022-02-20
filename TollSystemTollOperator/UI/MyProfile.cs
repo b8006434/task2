@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TollSystemServices;
 
-namespace TollSystemDriver.UI
+namespace TollSystemTollOperator.UI
 {
     public partial class MyProfile : Form
     {
@@ -47,10 +47,6 @@ namespace TollSystemDriver.UI
             label4.ForeColor = ThemeColor.PrimaryColor;
             label5.ForeColor = ThemeColor.PrimaryColor;
             label6.ForeColor = ThemeColor.PrimaryColor;
-            label7.ForeColor = ThemeColor.PrimaryColor;
-            label8.ForeColor = ThemeColor.PrimaryColor;
-            label10.ForeColor = ThemeColor.PrimaryColor;
-            label11.ForeColor = ThemeColor.PrimaryColor;
         }
 
         /// <summary>
@@ -72,18 +68,13 @@ namespace TollSystemDriver.UI
             usernameTxtBox.Text = currentUser.Username;
             passwordTxtBox.Text = currentUser.HashedPassword;
             nameTextBox.Text = currentUser.Name;
-            streetTextBox.Text = currentUser.StreetName;
-            cityTextBox.Text = currentUser.City;
-            postCodeTextBox.Text = currentUser.PostCode;
-            countryTextBox.Text = currentUser.Country;
-
         }
 
         /// <summary>
         /// Check that correct data has been input in the form fields
         /// </summary>
         /// <returns></returns>
-        private bool dataValidation()
+        private bool DataValidation()
         {
             if (!Validation.IsValidEmail(usernameTxtBox.Text))
             {
@@ -110,29 +101,6 @@ namespace TollSystemDriver.UI
                 return false;
             }
 
-            else if (!Validation.CheckForValidString(streetTextBox.Text))
-            {
-                MessageBox.Show("Please enter a valid Street Name");
-                return false;
-            }
-
-            else if (!Validation.CheckForValidString(cityTextBox.Text))
-            {
-                MessageBox.Show("Please enter a valid City");
-                return false;
-            }
-
-            else if (!Validation.CheckForValidString(postCodeTextBox.Text))
-            {
-                MessageBox.Show("Please enter valid Post Code");
-                return false;
-            }
-            else if (!Validation.CheckForValidString(countryTextBox.Text))
-            {
-                MessageBox.Show("Please enter valid Country");
-                return false;
-            }
-
             return true;
         }
 
@@ -144,23 +112,26 @@ namespace TollSystemDriver.UI
         private void updateBttn_Click(object sender, EventArgs e)
         {
             //If data is wrong or missing, abort creation of user
-            if (!dataValidation())
+            if (!DataValidation())
             {
                 this.DialogResult = DialogResult.None;
                 return;
             }
 
+            //Properties to be retrieved from forms
             string hashedPassword;
             int ID = currentUser.ID;
             string email = usernameTxtBox.Text;
             string name = nameTextBox.Text;
-            string streetName = streetTextBox.Text;
-            string city = cityTextBox.Text;
-            string postCode = postCodeTextBox.Text;
-            string country = countryTextBox.Text;
+
+            //Properties set from currently logged in toll operator user, as unable to change these
+            string streetName = currentUser.StreetName;
+            string city = currentUser.City;
+            string postCode = currentUser.PostCode;
+            string country = currentUser.Country;
 
 
-            //Check if password has been updated
+            //Set the password if it was updated
             if (!Validation.CheckIfPasswordChanged(ID, passwordTxtBox.Text))
             {
                 hashedPassword = passwordTxtBox.Text;
@@ -172,7 +143,7 @@ namespace TollSystemDriver.UI
 
             //Set the parameters up
             List<string> parameters = new List<string>();
-            parameters.AddRange(new[] {email,hashedPassword,name,streetName,city,postCode,country});
+            parameters.AddRange(new[] { email, hashedPassword, name, streetName, city, postCode, country });
 
             //Update the user in database, and update the current user info
             DataConnection.UpdateUserInTable(ID, parameters);

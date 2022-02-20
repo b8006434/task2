@@ -159,7 +159,7 @@ namespace TollSystemWinForms
 
             else if(currentUser.UserType == UserType.TollOperator)
             {
-                using(TollOperatorDashboard tollOperatorDashboard = new TollOperatorDashboard())
+                using(TollOperatorDashboard tollOperatorDashboard = new TollOperatorDashboard(currentUser))
                 {
                     tollOperatorDashboard.ShowDialog();
                 }

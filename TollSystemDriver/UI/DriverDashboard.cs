@@ -155,14 +155,19 @@ namespace TollSystemDriver.UI
         private void OpenChildForm(Form childForm, object btnSender)
         {
             if (activeForm != null && activeForm.Text != "Daily Challenge")
+            {
                 activeForm.Close();
+            }
             ActivateButton(btnSender);
             activeForm = childForm;
+
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
+
             this.panelDesktopPane.Controls.Add(childForm);
             this.panelDesktopPane.Tag = childForm;
+
             childForm.BringToFront();
             childForm.Show();
             lblTitle.Text = childForm.Text;
@@ -185,7 +190,7 @@ namespace TollSystemDriver.UI
         /// <param name="e"></param>
         private void billsBttn_Click(object sender, EventArgs e)
         {
-            OpenChildForm(null,sender);
+            OpenChildForm(new Bills(CurrentUser),sender);
         }
 
         /// <summary>

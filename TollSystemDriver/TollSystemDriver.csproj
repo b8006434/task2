@@ -50,6 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Bills.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Bills.Designer.cs">
+      <DependentUpon>Bills.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\DriverDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,7 +68,6 @@
     <Compile Include="UI\MyProfile.Designer.cs">
       <DependentUpon>MyProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ThemeColor.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -73,6 +78,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\Bills.resx">
+      <DependentUpon>Bills.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\DriverDashboard.resx">
       <DependentUpon>DriverDashboard.cs</DependentUpon>
     </EmbeddedResource>
