@@ -9,28 +9,28 @@ namespace TollSystemServices
 {
     public static class MockBills
     {
-        public static List<Bill> GetMockBills(int driverType)
-        {
-            List<Bill> returnList = new List<Bill>();
-            Random random = new Random();
+        //public static List<Bill> GetMockBills(int driverType)
+        //{
+        //    List<Bill> returnList = new List<Bill>();
+        //    Random random = new Random();
 
-            for (int a = 0; a < 10; a++)
-            {
-                string motorwayEntryPoint = "Highway " + a;
-                string motorwayLeavingPoint = "Highway " + (a + 3);
-                DriverType driver = (DriverType)driverType;
-                string regPlate = "BA" + a + " 14" + a;
-                string carType = "Car";
-                double amountToPay  = random.NextDouble() * (299.99 - 4.99) + 4.99;
+        //    for (int a = 0; a < 10; a++)
+        //    {
+        //        string motorwayEntryPoint = "Highway " + a;
+        //        string motorwayLeavingPoint = "Highway " + (a + 3);
+        //        DriverType driver = (DriverType)driverType;
+        //        string regPlate = "BA" + a + " 14" + a;
+        //        string carType = "Car";
+        //        double amountToPay = random.NextDouble() * (299.99 - 4.99) + 4.99;
 
-                List<string> parameters = new List<string> { motorwayEntryPoint, motorwayLeavingPoint, regPlate, carType };
+        //        List<string> parameters = new List<string> { motorwayEntryPoint, motorwayLeavingPoint, regPlate, carType };
 
-                Bill mockBill = new Bill(parameters, driver,amountToPay);
+        //        Bill mockBill = new Bill(parameters, driver, amountToPay);
 
-                returnList.Add(mockBill);
-            }
+        //        DataConnection.InsertIntoBillsTable(mockBill, 2);
+        //    }
 
-            return returnList;
-        }
+        //    return returnList;
+        //}
     }
 }

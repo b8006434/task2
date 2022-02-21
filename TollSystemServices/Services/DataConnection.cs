@@ -146,6 +146,114 @@ namespace TollSystemServices
 
         }
 
+        public static void InsertIntoBillsTable(Bill bill, int userID)
+        {
+            OpenConnection();
+            SqlCommand comm = myConnection.CreateCommand();
+            comm.CommandText = "INSERT INTO Bills(UserID,EntryPoint,ExitPoint,DriverType,RegPlate,VehicleType,Amount,Paid) " +
+                                "VALUES(@userIDParam,@entryPointParam, @exitPointParam, @driverTypeParam, @regPlateParam, @vehicleTypeParam," +
+                                       "@amountParam, @paidParam) ";
+            int bitValueForBool;
+
+            if (bill.billPaid)
+            {
+                bitValueForBool = 1;
+            }
+            else
+            {
+                bitValueForBool = 0;
+            }
+            comm.Parameters.AddWithValue("@userIDParam", userID);
+            comm.Parameters.AddWithValue("@entryPointParam", bill.MotorwayEntryPoint);
+            comm.Parameters.AddWithValue("@exitPointParam", bill.MotorwayLeavingPoint);
+            comm.Parameters.AddWithValue("@driverTypeParam", bill.DriverType.ToString());
+            comm.Parameters.AddWithValue("@regPlateParam", bill.RegistrationPlate);
+            comm.Parameters.AddWithValue("@vehicleTypeParam", bill.VehicleType);
+            comm.Parameters.AddWithValue("@amountParam", bill.AmountToPay);
+            comm.Parameters.AddWithValue("@paidParam", bitValueForBool);
+
+            comm.ExecuteNonQuery();
+            CloseConnection();
+
+        }
+
+        public static List<Bill> ReturnUnpaidBillsForUser(int userID)
+        {
+            OpenConnection();
+
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Bills WHERE UserID=@userIDParam AND Paid=@paidParam ", myConnection))
+            {
+                cmd.Parameters.AddWithValue("@userIDParam", userID);
+                cmd.Parameters.AddWithValue("@paidParam", 0);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    DataTable billsTable = new DataTable();
+                    billsTable.Load(dr);
+                    List<Bill> billsToShow = new List<Bill>();
+
+                    foreach (DataRow row in billsTable.Rows)
+                    {
+                        int billID;
+                        int userIDBill;
+                        double amount;
+                        int.TryParse(row[0].ToString(), out billID);
+                        int.TryParse(row[1].ToString(), out userIDBill);
+                        double.TryParse(row[7].ToString(), out amount);
+
+                        DriverType driverType = (DriverType)Enum.Parse(typeof(DriverType), row[4].ToString());
+                        List<string> parameters = new List<string> {row[2].ToString(), row[3].ToString(),
+                                                                    row[5].ToString(), row[6].ToString()};
+
+                        Bill billToAdd = new Bill(billID,parameters, driverType, amount);
+                        billsToShow.Add(billToAdd);
+                    }
+
+                    return billsToShow;
+                }
+
+                CloseConnection();
+                return null;
+            }
+        }
+
+        public static Bill ReturnBillByID(int billID)
+        {
+            OpenConnection();
+
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Bills WHERE Id=@billId ", myConnection))
+            {
+                cmd.Parameters.AddWithValue("@billId", billID);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    DataTable billsTable = new DataTable();
+                    billsTable.Load(dr);
+
+                        int id;
+                        int userIDBill;
+                        double amount;
+                        int.TryParse(billsTable.Rows[0][0].ToString(), out id);
+                        int.TryParse(billsTable.Rows[0][1].ToString(), out userIDBill);
+                        double.TryParse(billsTable.Rows[0][7].ToString(), out amount);
+
+                        DriverType driverType = (DriverType)Enum.Parse(typeof(DriverType), billsTable.Rows[0][4].ToString());
+                        List<string> parameters = new List<string> {billsTable.Rows[0][2].ToString(), billsTable.Rows[0][3].ToString(),
+                                                                   billsTable.Rows[0][5].ToString(), billsTable.Rows[0][6].ToString()};
+
+                        Bill billToAdd = new Bill(billID, parameters, driverType, amount);
+
+                    return billToAdd;
+                }
+
+                CloseConnection();
+                return null;
+            }
+        }
+
         public static User LoginUser(string username, string hashedPassword)
         {
             OpenConnection();
@@ -217,6 +325,21 @@ namespace TollSystemServices
             comm.Parameters.AddWithValue("@countryParam", parameters[6]);
             comm.ExecuteNonQuery();
             CloseConnection();
+        }
+
+        public static int ProcessedBill(int ID)
+        {
+            OpenConnection();
+            SqlCommand comm = myConnection.CreateCommand();
+            comm.CommandText = "UPDATE Bills SET Paid = @billPaid WHERE ID = @idParam ";
+
+            comm.Parameters.AddWithValue("@idParam", ID);
+            comm.Parameters.AddWithValue("@billPaid", 1);
+
+            var rowsAffected =comm.ExecuteNonQuery();
+            CloseConnection();
+
+            return rowsAffected;
         }
 
         public static string ReturnUserHashedPassword(int ID)

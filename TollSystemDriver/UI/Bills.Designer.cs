@@ -31,6 +31,7 @@ namespace TollSystemDriver.UI
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.billsOverviewGridView = new System.Windows.Forms.DataGridView();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.entryPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.leavingPoint = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.driverType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,6 +47,7 @@ namespace TollSystemDriver.UI
             this.billsOverviewGridView.BackgroundColor = System.Drawing.Color.White;
             this.billsOverviewGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.billsOverviewGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.id,
             this.entryPoint,
             this.leavingPoint,
             this.driverType,
@@ -66,6 +68,13 @@ namespace TollSystemDriver.UI
             this.billsOverviewGridView.Size = new System.Drawing.Size(514, 289);
             this.billsOverviewGridView.TabIndex = 21;
             this.billsOverviewGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.billsOverviewGridView_CellClick);
+            // 
+            // id
+            // 
+            this.id.HeaderText = "ID";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
             // 
             // entryPoint
             // 
@@ -127,6 +136,7 @@ namespace TollSystemDriver.UI
         #endregion
 
         private System.Windows.Forms.DataGridView billsOverviewGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn entryPoint;
         private System.Windows.Forms.DataGridViewTextBoxColumn leavingPoint;
         private System.Windows.Forms.DataGridViewTextBoxColumn driverType;

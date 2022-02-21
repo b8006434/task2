@@ -9,6 +9,7 @@ namespace TollSystemServices
 {
     public class Bill
     {
+        public int ID { get; }
         public string MotorwayEntryPoint { get; set; }
 
         public string MotorwayLeavingPoint { get; set; }
@@ -23,8 +24,9 @@ namespace TollSystemServices
 
         public bool billPaid { get; set; }
 
-        public Bill(List<string> parameters, DriverType driverType, double amountToPay)
+        public Bill(int id,List<string> parameters, DriverType driverType, double amountToPay)
         {
+            this.ID = id;
             this.MotorwayEntryPoint = parameters[0];
             this.MotorwayLeavingPoint = parameters[1];
             this.DriverType = driverType;
