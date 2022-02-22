@@ -87,7 +87,6 @@ namespace TollSystemTollOperator.UI
         {
             this.myProfileBttn.Image = (new Bitmap(Properties.Resources.information, new Size(32, 32)));
             this.driversBttn.Image = (new Bitmap(Properties.Resources.team, new Size(32, 32)));
-            this.billHistoryBttn.Image = (new Bitmap(Properties.Resources.bill, new Size(32, 32)));
             this.logoutBttn.Image = (new Bitmap(Properties.Resources.logout, new Size(32, 32)));
         }
 
@@ -188,20 +187,11 @@ namespace TollSystemTollOperator.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void billsBttn_Click(object sender, EventArgs e)
+        private void driversBttn_Click(object sender, EventArgs e)
         {
-            OpenChildForm(null, sender);
+            OpenChildForm(new Drivers(), sender);
         }
 
-        /// <summary>
-        /// Open personal trainer form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void travelHistoryBttn_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(null, sender);
-        }
 
         /// <summary>
         /// Drag main form with the top bar

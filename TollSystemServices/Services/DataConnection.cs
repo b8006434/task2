@@ -124,6 +124,50 @@ namespace TollSystemServices
             }
         }
 
+        public static List<User> ReturnAllDrivers()
+        {
+            OpenConnection();
+
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Users WHERE UserType != @userTypeParam ", myConnection))
+            {
+                cmd.Parameters.AddWithValue("@userTypeParam", UserType.TollOperator);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    DataTable usersTable = new DataTable();
+                    usersTable.Load(dr);
+                    List<User> usersToShow = new List<User>();
+
+                    foreach (DataRow row in usersTable.Rows)
+                    {
+                        int userID;
+                        int.TryParse(row[0].ToString(), out userID);
+
+                        string email = row[1].ToString();
+                        string hashedPassword = row[2].ToString();
+                        string name = row[3].ToString();
+                        UserType userType = (UserType)Enum.Parse(typeof(UserType), row[4].ToString());
+                        string streetName = row[5].ToString();
+                        string city = row[6].ToString();
+                        string postCode = row[7].ToString();
+                        string country = row[8].ToString();
+
+                        List<string> parameters = new List<string> {email,hashedPassword,name,streetName,
+                                                                    city,postCode,country};
+
+                        User userToAdd = new User(userID, parameters, userType);
+                        usersToShow.Add(userToAdd);
+                    }
+
+                    return usersToShow;
+                }
+
+                CloseConnection();
+                return null;
+            }
+        }
+
         public static void InsertIntoUsersTable(List<string> userDetails, UserType usertype)
         {
             OpenConnection();
@@ -201,10 +245,11 @@ namespace TollSystemServices
                         double.TryParse(row[7].ToString(), out amount);
 
                         DriverType driverType = (DriverType)Enum.Parse(typeof(DriverType), row[4].ToString());
+                        bool paid = Convert.ToBoolean(row[8].ToString());
                         List<string> parameters = new List<string> {row[2].ToString(), row[3].ToString(),
                                                                     row[5].ToString(), row[6].ToString()};
 
-                        Bill billToAdd = new Bill(billID,parameters, driverType, amount, default);
+                        Bill billToAdd = new Bill(billID,parameters, driverType, amount, paid, default);
                         billsToShow.Add(billToAdd);
                     }
 
@@ -241,11 +286,52 @@ namespace TollSystemServices
                         DateTime.TryParse(row[9].ToString(), out paidDate);
 
                         DriverType driverType = (DriverType)Enum.Parse(typeof(DriverType), row[4].ToString());
-
+                        bool paid = Convert.ToBoolean(row[8].ToString());
                         List<string> parameters = new List<string> {row[2].ToString(), row[3].ToString(),
                                                                     row[5].ToString(), row[6].ToString()};
 
-                        Bill billToAdd = new Bill(billID, parameters, driverType, amount, paidDate);
+                        Bill billToAdd = new Bill(billID, parameters, driverType, amount,paid, paidDate);
+                        billsToShow.Add(billToAdd);
+                    }
+
+                    return billsToShow;
+                }
+
+                CloseConnection();
+                return null;
+            }
+        }
+
+        public static List<Bill> ReturnAllBillsByUserID(int userID)
+        {
+            OpenConnection();
+
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Bills WHERE UserID=@userIDParam ", myConnection))
+            {
+                cmd.Parameters.AddWithValue("@userIDParam", userID);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    DataTable billsTable = new DataTable();
+                    billsTable.Load(dr);
+                    List<Bill> billsToShow = new List<Bill>();
+
+                    foreach (DataRow row in billsTable.Rows)
+                    {
+                        int billID;
+                        double amount;
+                        DateTime paidDate = default;
+                        int.TryParse(row[0].ToString(), out billID);
+                        double.TryParse(row[7].ToString(), out amount);
+                        DateTime.TryParse(row[9].ToString(), out paidDate);
+
+                        DriverType driverType = (DriverType)Enum.Parse(typeof(DriverType), row[4].ToString());
+                        bool paid = Convert.ToBoolean(row[8].ToString());
+                        List<string> parameters = new List<string> {row[2].ToString(), row[3].ToString(),
+                                                                    row[5].ToString(), row[6].ToString()};
+
+                        Bill billToAdd = new Bill(billID, parameters, driverType, amount,paid, paidDate);
                         billsToShow.Add(billToAdd);
                     }
 
@@ -272,18 +358,19 @@ namespace TollSystemServices
                     DataTable billsTable = new DataTable();
                     billsTable.Load(dr);
 
-                        int id;
-                        int userIDBill;
-                        double amount;
-                        int.TryParse(billsTable.Rows[0][0].ToString(), out id);
-                        int.TryParse(billsTable.Rows[0][1].ToString(), out userIDBill);
-                        double.TryParse(billsTable.Rows[0][7].ToString(), out amount);
+                    int id;
+                    int userIDBill;
+                    double amount;
+                    int.TryParse(billsTable.Rows[0][0].ToString(), out id);
+                    int.TryParse(billsTable.Rows[0][1].ToString(), out userIDBill);
+                    double.TryParse(billsTable.Rows[0][7].ToString(), out amount);
 
-                        DriverType driverType = (DriverType)Enum.Parse(typeof(DriverType), billsTable.Rows[0][4].ToString());
-                        List<string> parameters = new List<string> {billsTable.Rows[0][2].ToString(), billsTable.Rows[0][3].ToString(),
+                    DriverType driverType = (DriverType)Enum.Parse(typeof(DriverType), billsTable.Rows[0][4].ToString());
+                    bool paid = Convert.ToBoolean(billsTable.Rows[8].ToString());
+                    List<string> parameters = new List<string> {billsTable.Rows[0][2].ToString(), billsTable.Rows[0][3].ToString(),
                                                                    billsTable.Rows[0][5].ToString(), billsTable.Rows[0][6].ToString()};
 
-                        Bill billToAdd = new Bill(billID, parameters, driverType, amount, default);
+                    Bill billToAdd = new Bill(billID, parameters, driverType, amount, paid, default);
 
                     return billToAdd;
                 }

@@ -8,40 +8,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TollSystemServices;
-using TollSystemServices.Enums;
-using TollSystemServices.Services;
 
-namespace TollSystemDriver.UI
+namespace TollSystemTollOperator.UI
 {
-    public partial class Bills : Form
+    public partial class BillHistoryForDriver : Form
     {
-        private User CurrentUser;
-
-        public Bills()
+        public BillHistoryForDriver(int userID, string userName)
         {
             InitializeComponent();
-            
+            RefreshDataForBillsGridView(userID,userName);
         }
 
-        public Bills(User currentUser)
-        {
-
-            InitializeComponent();
-
-            this.CurrentUser = currentUser;
-            RefreshDataForBillsGridView();
-        }
-
-        private void RefreshDataForBillsGridView()
+        private void RefreshDataForBillsGridView(int userID, string userName)
         {
             billsOverviewGridView.DataSource = null;
             billsOverviewGridView.Rows.Clear();
-            var unpaidBills = DataConnection.ReturnUnpaidBillsForUser(CurrentUser.ID);
+            var allBills = DataConnection.ReturnAllBillsByUserID(userID);
 
-            foreach (Bill bill in unpaidBills)
+            foreach (Bill bill in allBills)
             {
-                billsOverviewGridView.Rows.Add(bill.ID,bill.MotorwayEntryPoint, bill.MotorwayLeavingPoint, bill.DriverType,
-                                         bill.RegistrationPlate, bill.VehicleType, $"£{bill.AmountToPay}");
+                string billPaid = bill.BillPaid == true ? "Yes" : "No";
+                string billPaidDate = bill.PaidDateTime.ToString() == "01/01/0001 00:00:00" ? "" : bill.PaidDateTime.ToString();
+
+                billsOverviewGridView.Rows.Add(bill.ID,userName, bill.MotorwayEntryPoint, bill.MotorwayLeavingPoint, bill.DriverType,
+                                         bill.RegistrationPlate, bill.VehicleType, $"£{bill.AmountToPay}", billPaid, billPaidDate);
             }
 
             FormatGridView();
@@ -71,33 +61,6 @@ namespace TollSystemDriver.UI
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-
-        }
-
-        public bool PayBill(int billID)
-        {
-            PaymentProcessor paymentProcessor = new PaymentProcessor();
-            return paymentProcessor.PayBill(billID);
-        }
-
-        private void billsOverviewGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if(e?.ColumnIndex != billsOverviewGridView.Columns["payBills"].Index)
-            {
-                return;
-            }
-
-            int billID;
-            if (!int.TryParse(billsOverviewGridView[0, e.RowIndex].Value?.ToString(), out billID))
-            {
-                return;
-            }
-
-            if(PayBill(billID))
-            {
-                RefreshDataForBillsGridView();
-            }
-
 
         }
 

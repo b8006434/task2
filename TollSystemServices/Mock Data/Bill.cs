@@ -27,7 +27,7 @@ namespace TollSystemServices
         public DateTime? PaidDateTime { get; set; }
 
         public Bill(int id,List<string> parameters, DriverType driverType, 
-                    double amountToPay, DateTime? paidDate)
+                    double amountToPay, bool paid, DateTime? paidDate)
         {
             this.ID = id;
             this.MotorwayEntryPoint = parameters[0];
@@ -36,7 +36,7 @@ namespace TollSystemServices
             this.RegistrationPlate = parameters[2];
             this.VehicleType = parameters[3];
             this.AmountToPay = Math.Round(amountToPay,2,MidpointRounding.AwayFromZero);
-            this.BillPaid = false;
+            this.BillPaid = paid;
             this.PaidDateTime = paidDate;
         }
     }

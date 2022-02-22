@@ -31,10 +31,10 @@ namespace TollSystemTollOperator.UI
         {
             this.panelMenu = new System.Windows.Forms.Panel();
             this.logoutBttn = new System.Windows.Forms.Button();
-            this.billHistoryBttn = new System.Windows.Forms.Button();
             this.driversBttn = new System.Windows.Forms.Button();
             this.myProfileBttn = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panelTitleBar = new System.Windows.Forms.Panel();
             this.btnMinimize = new System.Windows.Forms.Button();
@@ -42,20 +42,18 @@ namespace TollSystemTollOperator.UI
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelDesktopPane = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelMenu.SuspendLayout();
             this.panelLogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelTitleBar.SuspendLayout();
             this.panelDesktopPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.panelMenu.Controls.Add(this.logoutBttn);
-            this.panelMenu.Controls.Add(this.billHistoryBttn);
             this.panelMenu.Controls.Add(this.driversBttn);
             this.panelMenu.Controls.Add(this.myProfileBttn);
             this.panelMenu.Controls.Add(this.panelLogo);
@@ -73,7 +71,7 @@ namespace TollSystemTollOperator.UI
             this.logoutBttn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.logoutBttn.ForeColor = System.Drawing.Color.Gainsboro;
             this.logoutBttn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.logoutBttn.Location = new System.Drawing.Point(0, 260);
+            this.logoutBttn.Location = new System.Drawing.Point(0, 200);
             this.logoutBttn.Name = "logoutBttn";
             this.logoutBttn.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.logoutBttn.Size = new System.Drawing.Size(220, 60);
@@ -83,24 +81,6 @@ namespace TollSystemTollOperator.UI
             this.logoutBttn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.logoutBttn.UseVisualStyleBackColor = true;
             this.logoutBttn.Click += new System.EventHandler(this.logoutBttn_Click);
-            // 
-            // billHistoryBttn
-            // 
-            this.billHistoryBttn.Dock = System.Windows.Forms.DockStyle.Top;
-            this.billHistoryBttn.FlatAppearance.BorderSize = 0;
-            this.billHistoryBttn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.billHistoryBttn.ForeColor = System.Drawing.Color.Gainsboro;
-            this.billHistoryBttn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.billHistoryBttn.Location = new System.Drawing.Point(0, 200);
-            this.billHistoryBttn.Name = "billHistoryBttn";
-            this.billHistoryBttn.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.billHistoryBttn.Size = new System.Drawing.Size(220, 60);
-            this.billHistoryBttn.TabIndex = 3;
-            this.billHistoryBttn.Text = "   Bill History";
-            this.billHistoryBttn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.billHistoryBttn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.billHistoryBttn.UseVisualStyleBackColor = true;
-            this.billHistoryBttn.Click += new System.EventHandler(this.travelHistoryBttn_Click);
             // 
             // driversBttn
             // 
@@ -118,7 +98,7 @@ namespace TollSystemTollOperator.UI
             this.driversBttn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.driversBttn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.driversBttn.UseVisualStyleBackColor = true;
-            this.driversBttn.Click += new System.EventHandler(this.billsBttn_Click);
+            this.driversBttn.Click += new System.EventHandler(this.driversBttn_Click);
             // 
             // myProfileBttn
             // 
@@ -149,6 +129,16 @@ namespace TollSystemTollOperator.UI
             this.panelLogo.Name = "panelLogo";
             this.panelLogo.Size = new System.Drawing.Size(220, 80);
             this.panelLogo.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::TollSystemTollOperator.Properties.Resources.bill;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(58, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // label1
             // 
@@ -232,16 +222,6 @@ namespace TollSystemTollOperator.UI
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::TollSystemTollOperator.Properties.Resources.bill;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(58, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            // 
             // TollOperatorDashboard
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -260,12 +240,12 @@ namespace TollSystemTollOperator.UI
             this.panelMenu.ResumeLayout(false);
             this.panelLogo.ResumeLayout(false);
             this.panelLogo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelTitleBar.ResumeLayout(false);
             this.panelTitleBar.PerformLayout();
             this.panelDesktopPane.ResumeLayout(false);
             this.panelDesktopPane.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -273,7 +253,6 @@ namespace TollSystemTollOperator.UI
         #endregion
 
         private System.Windows.Forms.Panel panelMenu;
-        private System.Windows.Forms.Button billHistoryBttn;
         private System.Windows.Forms.Button driversBttn;
         private System.Windows.Forms.Button myProfileBttn;
         private System.Windows.Forms.Panel panelLogo;
