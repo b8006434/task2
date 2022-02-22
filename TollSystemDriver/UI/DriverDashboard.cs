@@ -200,7 +200,7 @@ namespace TollSystemDriver.UI
         /// <param name="e"></param>
         private void travelHistoryBttn_Click(object sender, EventArgs e)
         {
-            OpenChildForm(null, sender);
+            OpenChildForm(new TravelHistory(CurrentUser), sender);
         }
 
         /// <summary>

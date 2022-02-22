@@ -68,6 +68,12 @@
     <Compile Include="UI\MyProfile.Designer.cs">
       <DependentUpon>MyProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\TravelHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\TravelHistory.Designer.cs">
+      <DependentUpon>TravelHistory.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -86,6 +92,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MyProfile.resx">
       <DependentUpon>MyProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\TravelHistory.resx">
+      <DependentUpon>TravelHistory.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

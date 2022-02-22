@@ -29,12 +29,6 @@ namespace TollSystemDriver.UI
             InitializeComponent();
 
             this.CurrentUser = currentUser;
-
-            InitializeBillsGridView();
-        }
-
-        public void InitializeBillsGridView()
-        {
             RefreshDataForBillsGridView();
         }
 

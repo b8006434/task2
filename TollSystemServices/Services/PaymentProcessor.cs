@@ -13,7 +13,7 @@ namespace TollSystemServices.Services
         {
                 var bill = DataConnection.ReturnBillByID(billID);
 
-            if (bill == null || bill.billPaid == true)
+            if (bill == null || bill.BillPaid == true)
             {
                 return false;
             }

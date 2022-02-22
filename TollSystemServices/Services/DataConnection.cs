@@ -155,7 +155,7 @@ namespace TollSystemServices
                                        "@amountParam, @paidParam) ";
             int bitValueForBool;
 
-            if (bill.billPaid)
+            if (bill.BillPaid)
             {
                 bitValueForBool = 1;
             }
@@ -196,17 +196,56 @@ namespace TollSystemServices
                     foreach (DataRow row in billsTable.Rows)
                     {
                         int billID;
-                        int userIDBill;
                         double amount;
                         int.TryParse(row[0].ToString(), out billID);
-                        int.TryParse(row[1].ToString(), out userIDBill);
                         double.TryParse(row[7].ToString(), out amount);
 
                         DriverType driverType = (DriverType)Enum.Parse(typeof(DriverType), row[4].ToString());
                         List<string> parameters = new List<string> {row[2].ToString(), row[3].ToString(),
                                                                     row[5].ToString(), row[6].ToString()};
 
-                        Bill billToAdd = new Bill(billID,parameters, driverType, amount);
+                        Bill billToAdd = new Bill(billID,parameters, driverType, amount, default);
+                        billsToShow.Add(billToAdd);
+                    }
+
+                    return billsToShow;
+                }
+
+                CloseConnection();
+                return null;
+            }
+        }
+        public static List<Bill> ReturnPaidBillsForUser(int userID)
+        {
+            OpenConnection();
+
+            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Bills WHERE UserID=@userIDParam AND Paid=@paidParam ", myConnection))
+            {
+                cmd.Parameters.AddWithValue("@userIDParam", userID);
+                cmd.Parameters.AddWithValue("@paidParam", 1);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
+                {
+                    DataTable billsTable = new DataTable();
+                    billsTable.Load(dr);
+                    List<Bill> billsToShow = new List<Bill>();
+
+                    foreach (DataRow row in billsTable.Rows)
+                    {
+                        int billID;
+                        double amount;
+                        DateTime paidDate = default;
+                        int.TryParse(row[0].ToString(), out billID);
+                        double.TryParse(row[7].ToString(), out amount);
+                        DateTime.TryParse(row[9].ToString(), out paidDate);
+
+                        DriverType driverType = (DriverType)Enum.Parse(typeof(DriverType), row[4].ToString());
+
+                        List<string> parameters = new List<string> {row[2].ToString(), row[3].ToString(),
+                                                                    row[5].ToString(), row[6].ToString()};
+
+                        Bill billToAdd = new Bill(billID, parameters, driverType, amount, paidDate);
                         billsToShow.Add(billToAdd);
                     }
 
@@ -244,7 +283,7 @@ namespace TollSystemServices
                         List<string> parameters = new List<string> {billsTable.Rows[0][2].ToString(), billsTable.Rows[0][3].ToString(),
                                                                    billsTable.Rows[0][5].ToString(), billsTable.Rows[0][6].ToString()};
 
-                        Bill billToAdd = new Bill(billID, parameters, driverType, amount);
+                        Bill billToAdd = new Bill(billID, parameters, driverType, amount, default);
 
                     return billToAdd;
                 }
@@ -331,10 +370,11 @@ namespace TollSystemServices
         {
             OpenConnection();
             SqlCommand comm = myConnection.CreateCommand();
-            comm.CommandText = "UPDATE Bills SET Paid = @billPaid WHERE ID = @idParam ";
+            comm.CommandText = "UPDATE Bills SET Paid = @billPaid, DatePaid = @paidParam WHERE ID = @idParam ";
 
             comm.Parameters.AddWithValue("@idParam", ID);
             comm.Parameters.AddWithValue("@billPaid", 1);
+            comm.Parameters.AddWithValue("@paidParam", DateTime.Now);
 
             var rowsAffected =comm.ExecuteNonQuery();
             CloseConnection();
