@@ -12,6 +12,9 @@ using TollSystemServices;
 
 namespace TollSystemDriver.UI
 {
+    /// <summary>
+    /// This is the main landing page for the 'Driver' user
+    /// </summary>
     public partial class DriverDashboard : Form
     {
         /// <summary>
@@ -40,7 +43,7 @@ namespace TollSystemDriver.UI
         private Form activeForm;
 
         /// <summary>
-        /// Main constructor
+        /// Main constructor which sets the user and variables
         /// </summary>
         /// <param name="currentUser"></param>
         public DriverDashboard(User user)
@@ -54,14 +57,6 @@ namespace TollSystemDriver.UI
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
             this.CurrentUser = user;
             random = new Random();
-        }
-
-        /// <summary>
-        /// Additional constructor for inheritance
-        /// </summary>
-        public DriverDashboard()
-        {
-
         }
 
         /// <summary>
@@ -85,6 +80,7 @@ namespace TollSystemDriver.UI
         /// </summary>
         private void SetIcons()
         {
+            //Set relevant icons for the left hand side buttons in the main menu for a 'Driver' user
             this.myProfileBttn.Image = (new Bitmap(Properties.Resources.information, new Size(32, 32)));
             this.travelHistoryBttn.Image = (new Bitmap(Properties.Resources.map, new Size(32, 32)));
             this.billsBttn.Image = (new Bitmap(Properties.Resources.bill, new Size(32, 32)));
@@ -94,16 +90,21 @@ namespace TollSystemDriver.UI
         /// <summary>
         /// Set a random theme color 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A color for a control</returns>
         private Color SelectThemeColor()
         {
-            int index = random.Next(ThemeColor.ColorList.Count);
+            //Get a random number in the range of the color list defined in the UIHelper
+            int index = random.Next(UIHelper.ColorList.Count);
+
+            //Loop through the colors to get a random color
             while (tempIndex == index)
             {
-                index = random.Next(ThemeColor.ColorList.Count);
+                index = random.Next(UIHelper.ColorList.Count);
             }
             tempIndex = index;
-            string color = ThemeColor.ColorList[index];
+
+            //Return the Color
+            string color = UIHelper.ColorList[index];
             return ColorTranslator.FromHtml(color);
         }
 
@@ -113,22 +114,27 @@ namespace TollSystemDriver.UI
         /// <param name="btnSender"></param>
         private void ActivateButton(object btnSender)
         {
-            if (btnSender != null)
+            //If clicked object is not a button, and currently selected button is the same as sender, return
+            if (btnSender == null)
             {
-                if (currentButton != (Button)btnSender)
-                {
-                    DisableButton();
-                    Color color = SelectThemeColor();
-                    currentButton = (Button)btnSender;
-                    currentButton.BackColor = color;
-                    currentButton.ForeColor = Color.White;
-                    currentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                    panelTitleBar.BackColor = color;
-                    panelLogo.BackColor = ThemeColor.ChangeColorBrightness(color, -0.3);
-                    ThemeColor.PrimaryColor = color;
-                    ThemeColor.SecondaryColor = ThemeColor.ChangeColorBrightness(color, -0.3);
-                }
+                return;
             }
+            else if (currentButton == (Button)btnSender)
+            {
+                return;
+            }
+
+            //Set the button and panel properties
+            DisableButton();
+            Color color = SelectThemeColor();
+            currentButton = (Button)btnSender;
+            currentButton.BackColor = color;
+            currentButton.ForeColor = Color.White;
+            currentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            panelTitleBar.BackColor = color;
+            panelLogo.BackColor = UIHelper.ChangeColorBrightness(color, -0.3);
+            UIHelper.PrimaryColor = color;
+            UIHelper.SecondaryColor = UIHelper.ChangeColorBrightness(color, -0.3);
         }
 
         /// <summary>
@@ -136,6 +142,7 @@ namespace TollSystemDriver.UI
         /// </summary>
         private void DisableButton()
         {
+            //Change the theme for the buttons
             foreach (Control previousBtn in panelMenu.Controls)
             {
                 if (previousBtn.GetType() == typeof(Button))
@@ -154,27 +161,33 @@ namespace TollSystemDriver.UI
         /// <param name="btnSender"></param>
         private void OpenChildForm(Form childForm, object btnSender)
         {
-            if (activeForm != null && activeForm.Text != "Daily Challenge")
+            //If the form has already been opened , close it 
+            if (activeForm != null)
             {
                 activeForm.Close();
             }
+
+            //Highlight the clicked button and set the active form
             ActivateButton(btnSender);
             activeForm = childForm;
 
+            //Set the form properties
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
 
+            //Add the form to the controls
             this.panelDesktopPane.Controls.Add(childForm);
             this.panelDesktopPane.Tag = childForm;
 
+            //Display the clicked form
             childForm.BringToFront();
             childForm.Show();
             lblTitle.Text = childForm.Text;
         }
 
         /// <summary>
-        /// Open dashboards screen
+        /// Open my information screen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -184,7 +197,7 @@ namespace TollSystemDriver.UI
         }
 
         /// <summary>
-        /// Open challenges screen
+        /// Open Bills screen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -194,7 +207,7 @@ namespace TollSystemDriver.UI
         }
 
         /// <summary>
-        /// Open personal trainer form
+        /// Open travel history screen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -105,7 +105,7 @@ namespace TollSystemWinForms.UI
             this.resetBttn.TabIndex = 8;
             this.resetBttn.Text = "RESET";
             this.resetBttn.UseVisualStyleBackColor = false;
-            this.resetBttn.Click += new System.EventHandler(this.loginBttn_Click);
+            this.resetBttn.Click += new System.EventHandler(this.resetPasswordBttn_Click);
             // 
             // userNamePanel
             // 

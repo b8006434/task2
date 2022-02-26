@@ -14,7 +14,10 @@ namespace TollSystemServices
     /// </summary>
     public static class Validation
     {
-        private static Random random = new Random();
+        /// <summary>
+        /// The property to generate a random number
+        /// </summary>
+        private static Random Random = new Random();
 
         /// <summary>
         /// Generate bitmap image file for captcha
@@ -25,13 +28,18 @@ namespace TollSystemServices
         /// <returns></returns>
         public static Bitmap CaptchaToImage(string text, int width, int height)
         {
+            //Create a new bitmap with the given width and height, and convert this to the Graphics object for drawing
             Bitmap bmp = new Bitmap(width, height);
             Graphics g = Graphics.FromImage(bmp);
             SolidBrush sb = new SolidBrush(Color.White);
+
+            //Set the background and the image properties
             g.FillRectangle(sb, 0, 0, bmp.Width, bmp.Height);
             Font font = new Font("Tahoma", 45);
             sb = new SolidBrush(Color.Black);
             g.DrawString(text, font, sb, bmp.Width / 2 - (text.Length / 2) * font.Size, (bmp.Height / 2) - font.Size);
+
+            //Draw the random characters
             int count = 0;
             Random rand = new Random();
             while (count < 1000)
@@ -40,12 +48,16 @@ namespace TollSystemServices
                 g.FillEllipse(sb, rand.Next(0, bmp.Width), rand.Next(0, bmp.Height), 4, 2);
                 count++;
             }
+
+            //Draw over the random characters to make it difficult for AI to recognize the characters
             count = 0;
             while (count < 25)
             {
                 g.DrawLine(new Pen(Color.Bisque), rand.Next(0, bmp.Width), rand.Next(0, bmp.Height), rand.Next(0, bmp.Width), rand.Next(0, bmp.Height));
                 count++;
             }
+
+            //Return the created image
             return bmp;
         }
 
@@ -56,9 +68,11 @@ namespace TollSystemServices
         /// <returns></returns>
         public static string RandomString(int length)
         {
+            //Allowed characters to be used for random generation
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
             return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+              .Select(s => s[Random.Next(s.Length)]).ToArray());
         }
 
         /// <summary>
@@ -168,32 +182,6 @@ namespace TollSystemServices
             byte[] data = Encoding.ASCII.GetBytes(password);
             data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
             return Encoding.ASCII.GetString(data);
-        }
-
-        /// <summary>
-        /// Mainly used for weight / height checking
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static bool CheckForValidDecimal(string stringValue)
-        {
-            if (stringValue.Contains(":"))
-            {
-                stringValue = stringValue.Replace(':', '.');
-            }
-            else if (stringValue.Contains(","))
-            {
-                stringValue = stringValue.Replace(',', '.');
-            }
-
-            double doubleValue = Convert.ToDouble(stringValue);
-
-            if (doubleValue < 0)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         /// <summary>

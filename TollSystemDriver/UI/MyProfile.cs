@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TollSystemServices;
 
 namespace TollSystemDriver.UI
 {
+    /// <summary>
+    /// Code for the 'My Profile' form.
+    /// Allows users to change their information in the DB
+    /// </summary>
     public partial class MyProfile : Form
     {
         /// <summary>
-        /// Currently logged in user
+        /// Property for the currently logged in user
         /// </summary>
-        User currentUser;
+        private User currentUser;
 
         /// <summary>
-        /// Main constructor
+        /// Main constructor, set the user property
         /// </summary>
         public MyProfile(User user)
         {
@@ -33,28 +31,31 @@ namespace TollSystemDriver.UI
         /// </summary>
         private void LoadTheme()
         {
+            //Set the colours of each button to the theme from UIHelper
             foreach (Control btns in this.Controls)
             {
                 if (btns.GetType() == typeof(Button))
                 {
                     Button btn = (Button)btns;
-                    btn.BackColor = ThemeColor.PrimaryColor;
+                    btn.BackColor = UIHelper.PrimaryColor;
                     btn.ForeColor = System.Drawing.Color.White;
-                    btn.FlatAppearance.BorderColor = ThemeColor.SecondaryColor;
+                    btn.FlatAppearance.BorderColor = UIHelper.SecondaryColor;
                 }
             }
 
-            label4.ForeColor = ThemeColor.PrimaryColor;
-            label5.ForeColor = ThemeColor.PrimaryColor;
-            label6.ForeColor = ThemeColor.PrimaryColor;
-            label7.ForeColor = ThemeColor.PrimaryColor;
-            label8.ForeColor = ThemeColor.PrimaryColor;
-            label10.ForeColor = ThemeColor.PrimaryColor;
-            label11.ForeColor = ThemeColor.PrimaryColor;
+            //Set all of the labels' color to the theme from UIHelper
+            label4.ForeColor = UIHelper.PrimaryColor;
+            label5.ForeColor = UIHelper.PrimaryColor;
+            label6.ForeColor = UIHelper.PrimaryColor;
+            label7.ForeColor = UIHelper.PrimaryColor;
+            label8.ForeColor = UIHelper.PrimaryColor;
+            label10.ForeColor = UIHelper.PrimaryColor;
+            label11.ForeColor = UIHelper.PrimaryColor;
         }
 
         /// <summary>
-        /// Load the theme from main menu on load
+        /// When form shown for the first time, load the colours and set the current user's values 
+        /// To the text fields
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -80,10 +81,11 @@ namespace TollSystemDriver.UI
         }
 
         /// <summary>
-        /// Check that correct data has been input in the form fields
+        /// Check that correct data has been input in the form fields, and show error message,
+        /// When wrong data has been input in the field
         /// </summary>
         /// <returns></returns>
-        private bool dataValidation()
+        private bool DataValidation()
         {
             if (!Validation.IsValidEmail(usernameTxtBox.Text))
             {
@@ -137,19 +139,20 @@ namespace TollSystemDriver.UI
         }
 
         /// <summary>
-        /// Update values when button clicked
+        /// Update values when the 'Update' button has been clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void updateBttn_Click(object sender, EventArgs e)
         {
-            //If data is wrong or missing, abort creation of user
-            if (!dataValidation())
+            //If data is wrong or missing, abort the update of the user
+            if (!DataValidation())
             {
                 this.DialogResult = DialogResult.None;
                 return;
             }
 
+            //Get the user details from the text boxes
             string hashedPassword;
             int ID = currentUser.ID;
             string email = usernameTxtBox.Text;
@@ -160,7 +163,7 @@ namespace TollSystemDriver.UI
             string country = countryTextBox.Text;
 
 
-            //Check if password has been updated
+            //If the password has been changed, hash it, if not just use the current value
             if (!Validation.CheckIfPasswordChanged(ID, passwordTxtBox.Text))
             {
                 hashedPassword = passwordTxtBox.Text;
@@ -178,8 +181,10 @@ namespace TollSystemDriver.UI
             DataConnection.UpdateUserInTable(ID, parameters);
             currentUser = DataConnection.LoginUser(email, hashedPassword);
 
+            //Update the text field values in the form
             SetFieldValues();
 
+            //Display a success message
             MessageBox.Show($"{currentUser.Name}, your account is succesfully updated! ");
 
         }

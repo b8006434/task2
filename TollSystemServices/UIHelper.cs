@@ -4,13 +4,29 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TollSystemServices
 {
-    public static class ThemeColor
+    /// <summary>
+    /// This class is used by forms to improve aesthetics
+    /// Any shared code is used here
+    /// </summary>
+    public static class UIHelper
     {
+        /// <summary>
+        /// The property for the main color used app-wide
+        /// </summary>
         public static Color PrimaryColor { get; set; }
+
+        /// <summary>
+        /// The property for the secondary color used app-wide
+        /// </summary>
         public static Color SecondaryColor { get; set; }
+
+        /// <summary>
+        /// Property that gets the list of all available colors in the hex string format
+        /// </summary>
         public static List<string> ColorList = new List<string>() { "#3F51B5",
                                                                     "#009688",
                                                                     "#FF5722",
@@ -38,11 +54,20 @@ namespace TollSystemServices
                                                                     "#43B76E",
                                                                     "#7BCFE9",
                                                                     "#B71C46"};
+
+        /// <summary>
+        /// Change the brightness of a color
+        /// This can either be brighter or darker
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="correctionFactor"></param>
+        /// <returns></returns>
         public static Color ChangeColorBrightness(Color color, double correctionFactor)
         {
             double red = color.R;
             double green = color.G;
             double blue = color.B;
+
             //If correction factor is less than 0, darken color.
             if (correctionFactor < 0)
             {
@@ -51,6 +76,7 @@ namespace TollSystemServices
                 green *= correctionFactor;
                 blue *= correctionFactor;
             }
+
             //If correction factor is greater than zero, lighten color.
             else
             {
@@ -58,7 +84,31 @@ namespace TollSystemServices
                 green = (255 - green) * correctionFactor + green;
                 blue = (255 - blue) * correctionFactor + blue;
             }
+
             return Color.FromArgb(color.A, (byte)red, (byte)green, (byte)blue);
+        }
+
+        /// <summary>
+        /// Format the grid view preview for user
+        /// </summary>
+        public static void FormatGridView(DataGridView gridView)
+        {
+            //Set the shared properties for a given grid viw
+            gridView.ReadOnly = true;
+            gridView.DefaultCellStyle.SelectionBackColor = gridView.DefaultCellStyle.BackColor;
+            gridView.DefaultCellStyle.SelectionForeColor = gridView.DefaultCellStyle.ForeColor;
+            gridView.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            gridView.DefaultCellStyle.ForeColor = Color.Black;
+            gridView.DefaultCellStyle.SelectionBackColor = Color.GhostWhite;
+            gridView.RowHeadersVisible = false;
+            gridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridView.AllowUserToAddRows = false;
+
+            foreach (DataGridViewRow row in gridView.Rows)
+            {
+                gridView[0, row.Index].Style.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            }
+
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TollSystemServices
 {
+    /// <summary>
+    /// This class is used to help with data and data manipulation
+    /// </summary>
     public static class DataHelper
     {
 

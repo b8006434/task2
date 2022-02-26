@@ -12,6 +12,9 @@ using TollSystemServices;
 
 namespace TollSystemTollOperator.UI
 {
+    /// <summary>
+    /// This is the code behind the main menu for the toll operator
+    /// </summary>
     public partial class TollOperatorDashboard : Form
     {
         /// <summary>
@@ -40,7 +43,7 @@ namespace TollSystemTollOperator.UI
         private Form activeForm;
 
         /// <summary>
-        /// Main constructor
+        /// Main constructor that sets the default icons and initializes data
         /// </summary>
         /// <param name="currentUser"></param>
         public TollOperatorDashboard(User user)
@@ -54,14 +57,6 @@ namespace TollSystemTollOperator.UI
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
             this.CurrentUser = user;
             random = new Random();
-        }
-
-        /// <summary>
-        /// Additional constructor for inheritance
-        /// </summary>
-        public TollOperatorDashboard()
-        {
-
         }
 
         /// <summary>
@@ -85,6 +80,7 @@ namespace TollSystemTollOperator.UI
         /// </summary>
         private void SetIcons()
         {
+            //Set the correct icons for the left hand side menu buttons
             this.myProfileBttn.Image = (new Bitmap(Properties.Resources.information, new Size(32, 32)));
             this.driversBttn.Image = (new Bitmap(Properties.Resources.team, new Size(32, 32)));
             this.logoutBttn.Image = (new Bitmap(Properties.Resources.logout, new Size(32, 32)));
@@ -96,13 +92,13 @@ namespace TollSystemTollOperator.UI
         /// <returns></returns>
         private Color SelectThemeColor()
         {
-            int index = random.Next(ThemeColor.ColorList.Count);
+            int index = random.Next(UIHelper.ColorList.Count);
             while (tempIndex == index)
             {
-                index = random.Next(ThemeColor.ColorList.Count);
+                index = random.Next(UIHelper.ColorList.Count);
             }
             tempIndex = index;
-            string color = ThemeColor.ColorList[index];
+            string color = UIHelper.ColorList[index];
             return ColorTranslator.FromHtml(color);
         }
 
@@ -123,9 +119,9 @@ namespace TollSystemTollOperator.UI
                     currentButton.ForeColor = Color.White;
                     currentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                     panelTitleBar.BackColor = color;
-                    panelLogo.BackColor = ThemeColor.ChangeColorBrightness(color, -0.3);
-                    ThemeColor.PrimaryColor = color;
-                    ThemeColor.SecondaryColor = ThemeColor.ChangeColorBrightness(color, -0.3);
+                    panelLogo.BackColor = UIHelper.ChangeColorBrightness(color, -0.3);
+                    UIHelper.PrimaryColor = color;
+                    UIHelper.SecondaryColor = UIHelper.ChangeColorBrightness(color, -0.3);
                 }
             }
         }
@@ -157,6 +153,7 @@ namespace TollSystemTollOperator.UI
             {
                 activeForm.Close();
             }
+
             ActivateButton(btnSender);
             activeForm = childForm;
 
@@ -173,7 +170,7 @@ namespace TollSystemTollOperator.UI
         }
 
         /// <summary>
-        /// Open dashboards screen
+        /// Open the My Information screen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -183,7 +180,7 @@ namespace TollSystemTollOperator.UI
         }
 
         /// <summary>
-        /// Open challenges screen
+        /// Open the Drivers screen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

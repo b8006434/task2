@@ -11,6 +11,10 @@ using TollSystemServices;
 
 namespace TollSystemTollOperator.UI
 {
+    /// <summary>
+    /// The code behing the My Profile form
+    /// This lets the toll operator change their password and name
+    /// </summary>
     public partial class MyProfile : Form
     {
         /// <summary>
@@ -19,7 +23,7 @@ namespace TollSystemTollOperator.UI
         User currentUser;
 
         /// <summary>
-        /// Main constructor
+        /// Default constructor setting the currently logged in user property
         /// </summary>
         public MyProfile(User user)
         {
@@ -38,19 +42,19 @@ namespace TollSystemTollOperator.UI
                 if (btns.GetType() == typeof(Button))
                 {
                     Button btn = (Button)btns;
-                    btn.BackColor = ThemeColor.PrimaryColor;
+                    btn.BackColor = UIHelper.PrimaryColor;
                     btn.ForeColor = System.Drawing.Color.White;
-                    btn.FlatAppearance.BorderColor = ThemeColor.SecondaryColor;
+                    btn.FlatAppearance.BorderColor = UIHelper.SecondaryColor;
                 }
             }
 
-            label4.ForeColor = ThemeColor.PrimaryColor;
-            label5.ForeColor = ThemeColor.PrimaryColor;
-            label6.ForeColor = ThemeColor.PrimaryColor;
+            label4.ForeColor = UIHelper.PrimaryColor;
+            label5.ForeColor = UIHelper.PrimaryColor;
+            label6.ForeColor = UIHelper.PrimaryColor;
         }
 
         /// <summary>
-        /// Load the theme from main menu on load
+        /// When this form is loaded, set the theme and text field values
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -105,13 +109,13 @@ namespace TollSystemTollOperator.UI
         }
 
         /// <summary>
-        /// Update values when button clicked
+        /// Event that fires, when the update button is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void updateBttn_Click(object sender, EventArgs e)
         {
-            //If data is wrong or missing, abort creation of user
+            //If data is wrong or missing, abort update of user
             if (!DataValidation())
             {
                 this.DialogResult = DialogResult.None;
@@ -149,8 +153,10 @@ namespace TollSystemTollOperator.UI
             DataConnection.UpdateUserInTable(ID, parameters);
             currentUser = DataConnection.LoginUser(email, hashedPassword);
 
+            //Refresh the text field values, as the user details have changed
             SetFieldValues();
 
+            //Show a message success to the user
             MessageBox.Show($"{currentUser.Name}, your account is succesfully updated! ");
 
         }

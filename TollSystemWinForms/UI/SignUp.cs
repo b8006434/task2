@@ -13,14 +13,18 @@ using TollSystemServices;
 namespace TollSystemWinForms.UI
 {
     /// <summary>
-    /// Login form
+    /// This is the code behind the Sign Up form
+    /// This allows the user to sign up to the app as a driver user
     /// </summary>
     public partial class Signup : Form
     {
-        private string captchaText = Validation.RandomString(5);
+        /// <summary>
+        /// Property to check the captcha text displayed
+        /// </summary>
+        private string CaptchaText = Validation.RandomString(5);
 
         /// <summary>
-        /// Default Constructor
+        /// Default Constructor that initialized the form and loads the captcha image
         /// </summary>
         public Signup()
         {
@@ -33,7 +37,7 @@ namespace TollSystemWinForms.UI
         /// </summary>
         private void LoadCaptcha()
         {
-            captchaPictureBox.Image = Validation.CaptchaToImage(captchaText, captchaPictureBox.Width,
+            captchaPictureBox.Image = Validation.CaptchaToImage(CaptchaText, captchaPictureBox.Width,
                 captchaPictureBox.Height);
         }
 
@@ -87,7 +91,7 @@ namespace TollSystemWinForms.UI
             }
 
             else if (!Validation.CheckForValidString(captchaTextBox.Text) ||
-                    captchaText.ToUpper() != captchaTextBox.Text.ToUpper())
+                    CaptchaText.ToUpper() != captchaTextBox.Text.ToUpper())
             {
                 MessageBox.Show("Please enter a matching captcha");
                 return false;
@@ -109,7 +113,7 @@ namespace TollSystemWinForms.UI
         /// <param name="e"></param>
         private void captchaReloadPictureBox_Click(object sender, EventArgs e)
         {
-            captchaText = Validation.RandomString(5);
+            CaptchaText = Validation.RandomString(5);
             LoadCaptcha();
         }
 
@@ -127,6 +131,7 @@ namespace TollSystemWinForms.UI
                 return;
             }
 
+            //Retrieve the data from the text boxes
             string email = usernameTxtBox.Text;
             string hashedPassword = Validation.HashPassword(passwordTxtBox.Text);
             string name = nameTextBox.Text;
@@ -135,13 +140,15 @@ namespace TollSystemWinForms.UI
             string postCode = postCodeTextBox.Text;
             string country = countryTextBox.Text;
 
+            //Create a parameters list
             List<string> userDetails = new List<string> { email, hashedPassword, name, streetName, city, postCode, country };
 
+            //Inser the user into the database
             DataConnection.InsertIntoUsersTable(userDetails,UserType.Driver);
         }
 
         /// <summary>
-        /// Custom close button, for modern look as WPF one doesn't look sleek enough
+        /// Close the form, when the close button is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -152,7 +159,7 @@ namespace TollSystemWinForms.UI
 
 
         /// <summary>
-        /// When mouse held down, display the password in plain text
+        /// When the mouse is held down on the password icon, display text password chars
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -162,7 +169,7 @@ namespace TollSystemWinForms.UI
         }
 
         /// <summary>
-        /// When mouse is released, hide the password with password chars
+        /// When the mouse is released on the password icon, display hidden password charss
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

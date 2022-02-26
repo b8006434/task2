@@ -7,6 +7,10 @@ using TollSystemServices.Enums;
 
 namespace TollSystemServices
 {
+    /// <summary>
+    /// This class is used to generate mock data
+    /// Uncomment, change parametrs and run this to insert 10 bill records
+    /// </summary>
     public static class MockBills
     {
         //public static List<Bill> GetMockBills(int driverType)

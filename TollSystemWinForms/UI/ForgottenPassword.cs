@@ -12,12 +12,13 @@ using TollSystemServices;
 namespace TollSystemWinForms.UI
 {
     /// <summary>
-    /// Login form
+    /// This is the code behind the Forgotten Password screen
+    /// This lets the user reset their password
     /// </summary>
     public partial class ForgottenPassword : Form
     {
         /// <summary>
-        /// Default Constructor
+        /// Default Constructor that initializes the form
         /// </summary>
         public ForgottenPassword()
         {
@@ -26,15 +27,17 @@ namespace TollSystemWinForms.UI
 
 
         /// <summary>
-        /// Log the user in when the button is clicked
+        /// Send a reset password request to the user's email address
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void loginBttn_Click(object sender, EventArgs e)
+        private void resetPasswordBttn_Click(object sender, EventArgs e)
         {
-            string username = usernameTxtBox.Text;
-            if (!(Validation.CheckForValidString(username)) ||
-                !(DataHelper.CheckForExistingEmail(username)) || !(Validation.IsValidEmail(username)))
+            string email = usernameTxtBox.Text;
+
+            //If the email supplied is wrong, doesn't exist or isn't valid, return here and display an error message
+            if (!(Validation.CheckForValidString(email)) ||
+                !(DataHelper.CheckForExistingEmail(email)) || !(Validation.IsValidEmail(email)))
             {
                 MessageBox.Show("Enter a correct email address");
                 this.DialogResult = DialogResult.None;
@@ -42,7 +45,7 @@ namespace TollSystemWinForms.UI
             }
 
             //Reset password here - currently not doing anything as DB is running locally
-            //Otherwise server would send a password request code to user
+            //Otherwise server would send a password request email to user
 
             MessageBox.Show("Password reset email sent! ");
         }

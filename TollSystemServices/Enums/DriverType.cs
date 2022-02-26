@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace TollSystemServices.Enums
 {
     /// <summary>
-    /// The type of user currently logged in for correct dashboard Identification
+    /// The driver type for the system, could be a personal or business
+    /// This has the potential to expand further
     /// </summary>
     public enum DriverType
     {

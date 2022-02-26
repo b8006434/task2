@@ -16,12 +16,13 @@ using TollSystemServices;
 namespace TollSystemWinForms
 {
     /// <summary>
-    /// Login form
+    /// This is the code behind the Login form
+    /// This lets the user login to the app
     /// </summary>
     public partial class Login : Form
     {
         /// <summary>
-        /// Default Constructor
+        /// Default Constructor that initializes the form
         /// </summary>
         public Login()
         {
@@ -30,7 +31,8 @@ namespace TollSystemWinForms
 
 
         /// <summary>
-        /// White username, greyed out password text boxes
+        /// Format the screen so the screen is: 
+        /// Username textbox is white(active) and password text box is greyed out
         /// </summary>
         private void FormatUsernameTxtBox()
         {
@@ -41,7 +43,8 @@ namespace TollSystemWinForms
         }
 
         /// <summary>
-        /// White password, greyed out username text boxes
+        /// Format the screen so the screen is: 
+        /// Username textbox is greyed out and password text box is white(active)
         /// </summary>
         private void FormatPasswordTxtBox()
         {
@@ -52,7 +55,7 @@ namespace TollSystemWinForms
         }
 
         /// <summary>
-        /// Custom close button, for modern look as WPF one doesn't look sleek enough
+        /// Exit the application if the close button is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -82,7 +85,7 @@ namespace TollSystemWinForms
         }
 
         /// <summary>
-        /// When mouse held down, display the password in plain text
+        /// When the mouse is held down on the password icon, display plain text password chars
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -92,7 +95,7 @@ namespace TollSystemWinForms
         }
 
         /// <summary>
-        /// When mouse is released, hide the password with password chars
+        /// When the mouse is released on the password icon, display hidden password chars
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -110,26 +113,30 @@ namespace TollSystemWinForms
         {
             this.Hide();
             DialogResult signUpSuccess;
+
             using (Signup signupForm = new Signup())
             {
                 signUpSuccess = signupForm.ShowDialog();
             }
+
             Show();
         }
 
         /// <summary>
-        /// Log the user in when the button is clicked
+        /// Log the user in when the login button is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void loginBttn_Click(object sender, EventArgs e)
         {
-
+            //Retrive username and password from the text boxes
             string username = usernameTxtBox.Text;
             string password = passwordTxtBox.Text;
 
+            //Check that both fields are valid
             bool areFieldsValid = Validation.CheckForValidString(username) && Validation.CheckForValidString(password);
 
+            //If fields are not valid, return, clear the password text box and display an error message
             if (!areFieldsValid)
             {
                 MessageBox.Show("Please enter details in the credential fields!");
@@ -137,8 +144,10 @@ namespace TollSystemWinForms
                 return;
             }
 
+            //Log in the user
             User currentUser = DataHelper.LogInUser(username, password);
 
+            //If the user was not found, return and display an error message
             if (currentUser == null)
             {
                 MessageBox.Show("Invalid credentials supplied");
@@ -147,8 +156,8 @@ namespace TollSystemWinForms
             }
 
             this.Hide();
-            DialogResult mainMenuSuccess;
 
+            //If the logged in user is a driver, display the driver dashboard
             if(currentUser.UserType == UserType.Driver)
             {
                 using(DriverDashboard driverDashboard = new DriverDashboard(currentUser))
@@ -157,6 +166,7 @@ namespace TollSystemWinForms
                 }
             }
 
+            //If the logged in user is a toll operator, display the toll operator dashbaord
             else if(currentUser.UserType == UserType.TollOperator)
             {
                 using(TollOperatorDashboard tollOperatorDashboard = new TollOperatorDashboard(currentUser))
@@ -175,7 +185,7 @@ namespace TollSystemWinForms
         }
 
         /// <summary>
-        /// Reset a password form
+        /// Display the forgot password form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

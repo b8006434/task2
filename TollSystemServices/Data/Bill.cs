@@ -7,6 +7,9 @@ using TollSystemServices.Enums;
 
 namespace TollSystemServices
 {
+    /// <summary>
+    /// Bill data class used to represent data from the Database
+    /// </summary>
     public class Bill
     {
         public int ID { get; }
@@ -26,6 +29,16 @@ namespace TollSystemServices
 
         public DateTime? PaidDateTime { get; set; }
 
+        /// <summary>
+        /// Default constructor accepting parameters to create a new bill
+        /// Sets the properties from the parameters passed in
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="parameters"></param>
+        /// <param name="driverType"></param>
+        /// <param name="amountToPay"></param>
+        /// <param name="paid"></param>
+        /// <param name="paidDate"></param>
         public Bill(int id,List<string> parameters, DriverType driverType, 
                     double amountToPay, bool paid, DateTime? paidDate)
         {

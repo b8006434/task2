@@ -7,6 +7,9 @@ using TollSystemServices.Enums;
 
 namespace TollSystemServices
 {
+    /// <summary>
+    /// User data class used to represnt data from the Database
+    /// </summary>
     public class User
     {
         public int ID { get; }
@@ -27,7 +30,13 @@ namespace TollSystemServices
 
         public string Name { get; set; }
 
-
+        /// <summary>
+        /// Default constructor accepting parameters to create a new user
+        /// Sets the user properties from the parameters passed in
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="userDetails"></param>
+        /// <param name="usertype"></param>
         public User(int ID, List<string> userDetails,UserType usertype )
         {
             this.ID = ID;
