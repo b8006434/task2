@@ -175,6 +175,8 @@ namespace TollSystemWinForms
                 }
             }
 
+            //If for some reason, the user was not logged in, and the login form wasn't disposed of,
+            //Show the login form again
             if (!this.loginBttn.IsDisposed)
             {
                 usernameTxtBox.Text = string.Empty;
